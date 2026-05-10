@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Site Completo</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 40px auto;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+        }
+
+            .input-box input {
+                width: 100%;
+                padding: 14px;
+                border: none;
+                border-radius: 10px;
+                background: #334155;
+                color: white;
+                outline: none;
+                font-size: 15px;
+            }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+            .btn:hover {
+                background: #1d4ed8;
+            }
+
+        .switch {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+            .switch a {
+                color: #60a5fa;
+                cursor: pointer;
+                text-decoration: none;
+            }
+
+        .hidden {
+            display: none;
+        }
+
+        .dashboard {
+            padding: 20px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+            }
+
+            .card h2 {
+                margin-bottom: 10px;
+                color: #60a5fa;
+            }
+
+        .logout {
+            background: crimson;
+            border: none;
+            padding: 10px 18px;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .task-box {
+            margin-top: 30px;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        .task-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+            .task-input input {
+                flex: 1;
+                padding: 12px;
+                border-radius: 10px;
+                border: none;
+                outline: none;
+                background: #334155;
+                color: white;
+            }
+
+        ul {
+            margin-top: 20px;
+            list-style: none;
+        }
+
+        li {
+            background: #334155;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete {
+            background: crimson;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="authBox">
+
+        <div id="registerForm">
+            <h1>Criar Conta</h1>
+
+            <div class="input-box">
+                <input type="text" id="registerName" placeholder="Nome">
+            </div>
+
+            <div class="input-box">
+                <input type="email" id="registerEmail" placeholder="Email">
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="registerPassword" placeholder="Senha">
+            </div>
+
+            <button class="btn" onclick="register()">Cadastrar</button>
+
+            <div class="switch">
+                Já possui conta?
+                <a onclick="showLogin()">Entrar</a>
+            </div>
+        </div>
+
+        <div id="loginForm" class="hidden">
+            <h1>Entrar</h1>
+
+            <div class="input-box">
+                <input type="email" id="loginEmail" placeholder="Email">
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="loginPassword" placeholder="Senha">
+            </div>
+
+            <button class="btn" onclick="login()">Entrar</button>
+
+            <div class="switch">
+                Não possui conta?
+                <a onclick="showRegister()">Cadastrar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard hidden" id="dashboard">
+
+        <div class="topbar">
+            <h1 id="welcome"></h1>
+            <button class="logout" onclick="logout()">Sair</button>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <h2>Usuários</h2>
+                <p>Sistema funcionando</p>
+            </div>
+
+            <div class="card">
+                <h2>Dashboard</h2>
+                <p>Interface moderna</p>
+            </div>
+
+            <div class="card">
+                <h2>Conta</h2>
+                <p>Login salvo</p>
+            </div>
+        </div>
+
+        <div class="task-box">
+            <h2>Lista de tarefas</h2>
+
+            <div class="task-input">
+                <input type="text" id="taskText" placeholder="Digite uma tarefa">
+                <button class="btn" onclick="addTask()">Adicionar</button>
+            </div>
+
+            <ul id="taskList"></ul>
+        </div>
+
+    </div>
+
+    <script>
+
+    function showLogin() {
+      document.getElementById('registerForm').classList.add('hidden');
+      document.getElementById('loginForm').classList.remove('hidden');
+    }
+
+    function showRegister() {
+      document.getElementById('loginForm').classList.add('hidden');
+      document.getElementById('registerForm').classList.remove('hidden');
+    }
+
+    function register() {
+      const name = document.getElementById('registerName').value;
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+
+      if (!name || !email || !password) {
+        alert('Preencha todos os campos');
+        return;
+      }
+
+      const user = {
+        name,
+        email,
+        password
+      };
+
+      localStorage.setItem('user', JSON.stringify(user));
+
+      alert('Conta criada com sucesso');
+
+      showLogin();
+    }
+
+    function login() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const savedUser = JSON.parse(localStorage.getItem('user'));
+
+      if (!savedUser) {
+        alert('Nenhuma conta encontrada');
+        return;
+      }
+
+      if (email === savedUser.email && password === savedUser.password) {
+
+        document.getElementById('authBox').classList.add('hidden');
+        document.getElementById('dashboard').classList.remove('hidden');
+
+        document.getElementById('welcome').innerText = `Bem-vindo, ${savedUser.name}`;
+
+        loadTasks();
+
+      } else {
+        alert('Email ou senha incorretos');
+      }
+    }
+
+    function logout() {
+      document.getElementById('dashboard').classList.add('hidden');
+      document.getElementById('authBox').classList.remove('hidden');
+    }
+
+    function addTask() {
+      const taskText = document.getElementById('taskText').value;
+
+      if (!taskText) return;
+
+      let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+      tasks.push(taskText);
+
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+
+      document.getElementById('taskText').value = '';
+
+      loadTasks();
+    }
+
+    function loadTasks() {
+      const taskList = document.getElementById('taskList');
+      taskList.innerHTML = '';
+
+      let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+      tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+
+        li.innerHTML = `
+          ${task}
+          <button class="delete" onclick="deleteTask(${index})">X</button>
+        `;
+
+        taskList.appendChild(li);
+      });
+    }
+
+    function deleteTask(index) {
+      let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+      tasks.splice(index, 1);
+
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+
+      loadTasks();
+    }
+
+    </script>
+
+</body>
+</html>
